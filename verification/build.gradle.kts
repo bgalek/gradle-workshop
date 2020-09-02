@@ -19,6 +19,7 @@ configure<JavaPluginConvention> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    failFast = true
     jvmArgs("--enable-preview", "-XX:+ShowCodeDetailsInExceptionMessages")
 }
 
