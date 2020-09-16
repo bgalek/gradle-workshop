@@ -12,22 +12,29 @@ import java.util.List;
 abstract class Lesson {
 
     private final String lessonName;
-    private final Path projectDir;
+    private Path projectDir;
     private final GradleRunner gradleRunner = GradleRunner.create();
 
     Lesson(String lessonName) {
         this.lessonName = lessonName;
-        this.projectDir = copyProjectToTmpDir();
     }
 
-    Path copyProjectToTmpDir() {
+    void sampleJavaProject() {
+        this.projectDir = copyProjectToTmpDir("setup1");
+    }
+
+    void sampleJavaProjectWithTests() {
+        this.projectDir = copyProjectToTmpDir("setup2");
+    }
+
+    Path copyProjectToTmpDir(String setup) {
         try {
             Path tmpDir = Files.createTempDirectory("gradle-workshop");
             System.out.printf("Created temp directory: %s%n", tmpDir.toString());
             Path lessonDir = Files.createDirectory(tmpDir.resolve(lessonName));
             Files.copy(Paths.get("../%s/build.gradle.kts".formatted(lessonName)), lessonDir.resolve("build.gradle.kts"));
             Files.copy(Paths.get("../%s/settings.gradle.kts".formatted(lessonName)), lessonDir.resolve("settings.gradle.kts"));
-            copyRecursively(Paths.get("src/test/resources/%s".formatted(lessonName)), lessonDir);
+            copyRecursively(Paths.get("src/test/resources/%s/%s".formatted(lessonName, setup)), lessonDir);
             return lessonDir;
         } catch (IOException e) {
             throw new RuntimeException(e);
