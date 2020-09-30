@@ -10,10 +10,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class Lesson1 extends Lesson {
+public class Lesson1 extends Lesson {
 
     Lesson1() {
-        super("lesson1");
+        super();
+    }
+
+    Lesson1(String ktsFileContent) {
+        super(ktsFileContent);
     }
 
     @Test
