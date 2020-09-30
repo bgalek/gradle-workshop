@@ -38,6 +38,10 @@ abstract class Lesson {
         }
     }
 
+    Lesson(String lessonName, String ktsFileContent){
+        this.lessonName = lessonName;
+    }
+
     void sampleJavaProject() {
         this.projectDir = copyProjectToTmpDir("setup1");
     }
