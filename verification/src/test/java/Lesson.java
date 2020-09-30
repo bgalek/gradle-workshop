@@ -8,15 +8,34 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Objects;
 
 abstract class Lesson {
 
-    private final String lessonName;
+    private final String ktsFileContent;
     private Path projectDir;
     private final GradleRunner gradleRunner = GradleRunner.create();
 
-    Lesson(String lessonName) {
-        this.lessonName = lessonName;
+    Lesson() {
+        this.ktsFileContent = defaultKtsFileContent();
+    }
+
+    Lesson(String ktsFileContent) {
+        Objects.requireNonNull(ktsFileContent);
+        this.ktsFileContent = ktsFileContent;
+    }
+
+    private String lessonName() {
+        return this.getClass().getSimpleName().toLowerCase();
+    }
+
+    private String defaultKtsFileContent() {
+        try {
+            Path path = Paths.get("../%s/build.gradle.kts".formatted(lessonName()));
+            return Files.readString(path);
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     void sampleJavaProject() {
@@ -27,15 +46,15 @@ abstract class Lesson {
         this.projectDir = copyProjectToTmpDir("setup2");
     }
 
-    Path copyProjectToTmpDir(String setup) {
+    private Path copyProjectToTmpDir(String setup) {
         try {
             Path tmpDir = Files.createTempDirectory("gradle-workshop");
             System.out.printf("Created temp directory: %s%n", tmpDir.toString());
-            Path lessonDir = Files.createDirectory(tmpDir.resolve(lessonName));
-            Files.copy(Paths.get("../%s/build.gradle.kts".formatted(lessonName)), lessonDir.resolve("build.gradle.kts"));
-            Files.copy(Paths.get("../%s/settings.gradle.kts".formatted(lessonName)), lessonDir.resolve("settings.gradle.kts"));
-            copyRecursively(Paths.get("src/test/resources/%s/%s".formatted(lessonName, setup)), lessonDir);
-            return lessonDir;
+            Path tmpLessonDir = Files.createDirectory(tmpDir.resolve(lessonName()));
+            Files.writeString(tmpLessonDir.resolve("build.gradle.kts"), ktsFileContent);
+            Files.copy(Paths.get("../%s/settings.gradle.kts".formatted(lessonName())), tmpLessonDir.resolve("settings.gradle.kts"));
+            copyRecursively(Paths.get("src/test/resources/%s/%s".formatted(lessonName(), setup)), tmpLessonDir);
+            return tmpLessonDir;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
