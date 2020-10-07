@@ -3,7 +3,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.opentest4j.AssertionFailedError;
 
-public class SimpleTest {
+public class Lesson1Task1IntegrationTest {
 
     @Test
     @DisplayName("test1")
@@ -70,5 +70,4 @@ public class SimpleTest {
         //expect task1 passes for given kts
         Assertions.assertThrows(AssertionFailedError.class, () -> new Lesson1(kts).task1());
     }
-
 }

@@ -1,6 +1,6 @@
 # Lesson 1
 
-## Task1
+## Task 1:
 
 Your first task is to add java plugin to your gradle build using kotlin dsl.
 
@@ -14,7 +14,8 @@ plugins {
 docs: <a href="https://docs.gradle.org/current/userguide/plugins.html#sec:plugins_block">
 gradle documentation about plugins
 
-## Task 2
+## Task 2:
+
 explore java plugin configuration
 
 ## Task 3:
@@ -27,7 +28,7 @@ version: `16.0.1`
 
 from google maven: `https://dl.google.com/android/maven2/`
 
-## Task 4
+## Task 4:
 
 - Add test dependencies (junit 5)
 - Enable junit (useJUnitPlatform())

@@ -1,0 +1,30 @@
+lesson2/insurance/build.gradle.kts
+===
+
+plugins {
+    java
+}
+
+lesson2/credit/build.gradle.kts
+===
+
+plugins {
+    java
+}
+
+dependencies {
+    implementation(project(":account"))
+}
+
+lesson2/account/build.gradle.kts
+===
+
+plugins {
+    java
+}
+
+lesson2/settings.gradle.kts
+===
+
+rootProject.name = "lesson2"
+include("insurance", "credit")
