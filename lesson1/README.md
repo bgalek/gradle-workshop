@@ -16,7 +16,7 @@ gradle documentation about plugins
 
 ## Task 2:
 
-explore java plugin configuration
+Explore java plugin configuration and set `sourceCompatibility` and `targetCompatibility` properties equal to `JavaVersion.VERSION_11`.
 
 ## Task 3:
 

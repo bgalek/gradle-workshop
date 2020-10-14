@@ -1,12 +1,13 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.opentest4j.AssertionFailedError;
 
 public class Lesson1Task1IntegrationTest {
 
     @Test
-    @DisplayName("test1")
+    @DisplayName("Should pass if java plugin was applied")
     void test1() {
         //given kts script with configured java plugin
         var kts = """
@@ -16,11 +17,11 @@ public class Lesson1Task1IntegrationTest {
                 """;
 
         //expect task1 passes for given kts
-        Assertions.assertDoesNotThrow(() -> new Lesson1(kts).task1());
+        Assertions.assertDoesNotThrow(executeLesson1Task1(kts));
     }
 
     @Test
-    @DisplayName("test2")
+    @DisplayName("Should pass if application plugin (which expands java plugin) was applied")
     void test2() {
         //given kts script with configured java plugin
         var kts = """
@@ -30,11 +31,11 @@ public class Lesson1Task1IntegrationTest {
                 """;
 
         //expect task1 passes for given kts
-        Assertions.assertDoesNotThrow(() -> new Lesson1(kts).task1());
+        Assertions.assertDoesNotThrow(executeLesson1Task1(kts));
     }
 
     @Test
-    @DisplayName("test3")
+    @DisplayName("Should not pass if kotlin plugin was applied instead of java plugin")
     void test3() {
         //given kts script with configured java plugin
         var kts = """
@@ -44,11 +45,11 @@ public class Lesson1Task1IntegrationTest {
                 """;
 
         //expect task1 passes for given kts
-        Assertions.assertThrows(AssertionFailedError.class, () -> new Lesson1(kts).task1());
+        Assertions.assertThrows(AssertionFailedError.class, executeLesson1Task1(kts));
     }
 
     @Test
-    @DisplayName("test4")
+    @DisplayName("Should not pass if no plugin was applied")
     void test4() {
         //given kts script with configured java plugin
         var kts = """
@@ -57,17 +58,21 @@ public class Lesson1Task1IntegrationTest {
                 """;
 
         //expect task1 passes for given kts
-        Assertions.assertThrows(AssertionFailedError.class, () -> new Lesson1(kts).task1());
+        Assertions.assertThrows(AssertionFailedError.class, executeLesson1Task1(kts));
     }
 
     @Test
-    @DisplayName("test5")
+    @DisplayName("Should not pass if kts script is blank")
     void test5() {
         //given kts script with configured java plugin
         var kts = """
                 """;
 
         //expect task1 passes for given kts
-        Assertions.assertThrows(AssertionFailedError.class, () -> new Lesson1(kts).task1());
+        Assertions.assertThrows(AssertionFailedError.class, executeLesson1Task1(kts));
+    }
+
+    private Executable executeLesson1Task1(String kts) {
+        return () -> new Lesson1(kts).task1();
     }
 }
